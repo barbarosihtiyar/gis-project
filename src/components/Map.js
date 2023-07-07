@@ -30,27 +30,21 @@ const Map = () => {
           .setOffset([0, -25])
           .addTo(map);
 
-        addCustomMarker(marker);
+          addCustomMarker(marker);
         
         marker.getElement().addEventListener("click", (e) => {
           // Diğer markerları gizle
           const chooseMarker = e.target.parentNode.parentNode
+          console.log(chooseMarker)
           markers.map((otherMarker) => {
             if (otherMarker !== marker) {
               otherMarker.getElement().classList.add("hidden");
             }
           });
+          console.log("a")
           handleMarkerHover(chooseMarker,station)
+
         });
-        // marker.getElement().addEventListener("mouseleave", (e) => {
-        //   // Diğer markerları göster
-        //   const chooseMarker = e.target
-        //   markers.map((otherMarker) => {
-        //     if (otherMarker !== marker) {
-        //       handleMarkerHoverEnd(otherMarker,chooseMarker,station)
-        //     }
-        //   });
-        // });
 
         return marker;
       });

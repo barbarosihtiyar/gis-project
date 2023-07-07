@@ -3,9 +3,10 @@ import { createContext,useContext,useState } from "react";
 const MainContext = createContext();
 
 export const ContextProvider = ({children}) => {
-    const [activeMenu,setActiveMenu] = useState(true);
+    const [statePopup,setStatePopup] = useState(null);
+    const [sideBar,setSideBar] = useState(null);
     return (
-    <MainContext.Provider value={{activeMenu,setActiveMenu}}>
+    <MainContext.Provider value={{statePopup,setStatePopup}}>
         {children}
     </MainContext.Provider>
     )
