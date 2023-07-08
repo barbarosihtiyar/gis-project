@@ -1,0 +1,122 @@
+.sidebar{
+    position: fixed;
+    z-index: 999;
+    height: 100%;
+    right: 0;   
+    .sidebarContainer{
+        height: 100%;
+        background-color: #fff;
+        .sidebarWrapper{
+            margin: 0px 50px 0px 10px;
+            padding-right: 30px;
+            padding-top: 20px;
+            height: 100%;
+            width: 100%;
+            .sidebarHeader{
+                display: flex;
+                justify-content: space-between;
+                span{
+                    #filterLabel{
+
+                    }
+                    #clearLabel{
+
+                    }
+                }
+            }
+            .sidebarFilter{
+                @extend .flex-col;
+                .parkingNumber{
+                    @extend .flex-col;
+                    span{
+
+                    }
+                    #parkingNumberInput{
+                        
+                    }
+                }
+                .district{
+                    @extend .flex-col;;
+                    span{
+
+                    }
+                    #districtInput{
+                        
+                    }
+                }
+                .locationArea{
+                    @extend .flex-col;;
+                    span{
+
+                    }
+                    #locationNameInput{
+                        
+                    }
+                }
+                .parkingDescriptionArea{
+                    @extend .flex-col;;
+                    span{
+
+                    }
+                    #parkingDescriptionInput{
+                        
+                    }
+                }
+                .workingHourArea{
+                    @extend .flex-col;;
+                    span{
+
+                    }
+                    #workingHourInput{
+                        
+                    }
+                }
+                .capacityArea{
+                    @extend .flex-col;;
+                    span{
+
+                    }
+                    #capacityInput{
+                        
+                    }
+                }
+            }
+            .sidebarSubmit{
+                @extend .flex-col;;
+                #submitButton{
+
+                }
+            }
+        }
+    }
+}
+
+.flex-col{
+    display: flex;
+    flex-direction: column;
+}
+
+input{
+    border: none;
+    background-color: rgb(222, 222, 222);
+    border-radius: 5px;
+    padding: 5px;
+}
+span{
+    font-size: 25px;
+}
+button{
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 30px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.hidden{
+    transform: translateX(300px);
+}
+.show{
+    transform: translateX(0px);
+}

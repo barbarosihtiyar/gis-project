@@ -1,3 +1,5 @@
+import { FaTimes } from 'react-icons/fa';
+
 
 //Markerlar içinde div olusturur
 export function addCustomMarker(marker) {
@@ -22,7 +24,7 @@ if(stateCheckPopup == null){
   infoDiv.innerHTML = `
   <div class="infoWrapper" id=${station._ID}> 
   <div>
-    <div><span class="infoHoverText">ID:</span> ${station._ID}</div>
+    <div><span class="infoHoverText">OTOPARK NO:</span> ${station._ID}</div>
     <div><span class="infoHoverText">İLÇE:</span> ${station.COUNTY_NAME}</div>
     <div><span class="infoHoverText">KONUM İSMİ:</span> ${station.LOCATION_NAME}</div>
     <div><span class="infoHoverText">OTOPARK AÇIKLAMASI:</span> ${station.PARK_TYPE_DESC}</div>
