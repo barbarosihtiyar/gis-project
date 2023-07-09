@@ -3,32 +3,34 @@ import { createContext, useContext, useState } from "react";
 const MainContext = createContext();
 
 export const ContextProvider = ({ children }) => {
-  const [stateSidebar, setStateSidebar] = useState(false);
+  const [stateSidebar, setStateSidebar] = useState(true);
   const [parkingVal, setParkingVal] = useState({
-    name:"_ID",
-    value:""
+    name: "_ID",
+    value: "",
   });
   const [districtVal, setDistrictVal] = useState({
-    name:"COUNTY_NAME",
-    value:""
+    name: "COUNTY_NAME",
+    value: "",
   });
   const [locationVal, setLocationVal] = useState({
-    name:"LOCATION_NAME",
-    value:""
+    name: "LOCATION_NAME",
+    value: "",
   });
   const [parkingDescriptionVal, setParkingDescriptionVal] = useState({
-    name:"PARK_TYPE_DESC",
-    value:""
+    name: "PARK_TYPE_DESC",
+    value: "",
   });
   const [workingHourVal, setWorkingHourVal] = useState({
-    name:"WORKING_TIME",
-    value:""
+    name: "WORKING_TIME",
+    value: "",
   });
   const [capacityVal, setCapacityVal] = useState({
-    name:"CAPACITY_OF_PARK",
-    value:""
+    name: "CAPACITY_OF_PARK",
+    value: "",
   });
   const [contain, setContain] = useState([]);
+  const [sidebarLocation, setSidebarLocation] = useState(true);
+  const [zooms, setZooms] = useState(14);
   return (
     <MainContext.Provider
       value={{
@@ -48,6 +50,10 @@ export const ContextProvider = ({ children }) => {
         setCapacityVal,
         contain,
         setContain,
+        sidebarLocation,
+        setSidebarLocation,
+        zooms,
+        setZooms,
       }}
     >
       {children}

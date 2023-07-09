@@ -1,0 +1,25 @@
+.buttons{
+        position: absolute;
+        background-color: #fff;
+        bottom: 50px;
+        border-radius: 10px;
+        z-index: 1000;
+        padding: 10px;
+        font-size: 13px;
+    .buttonsContainer{
+        display: flex;
+        flex-direction: column;
+        .buttonsWrapper{
+            .zoomInButtons{
+                font-weight: 600;
+                font-size: 14px;
+                cursor: pointer;
+            }
+            .zoomOutButtons{
+                font-weight: 600;
+                font-size: 14px;
+                cursor: pointer;
+            }
+        }
+    }
+}

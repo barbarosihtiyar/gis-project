@@ -4,21 +4,32 @@ import { isparkLocation } from "../utils/constant";
 import { addCustomMarker, handleMarkerHover, handleMarkerHoverEnd } from "./addCustomMarker";
 import "../style/locationIcon.scss";
 import { useMainContext } from "../context/context";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import Buttons from "./Buttons";
+
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYmFyYmFyb3NpaHRpeWFyIiwiYSI6ImNsam5mOW1ycjFiMmUzZm5vbzBxczFicTkifQ.NrxkXzSbCWv6dTxGL3vDBw";
 
+ 
+
 const Map = () => {
   const mapContainerRef = useRef(null);
+  const mapRef = useRef(null);
   const { contain} = useMainContext();
+  const { zooms } = useMainContext();
+
+
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: [29.056932287504, 41.0843327967144],
-      zoom: 10,
+      center: [29.006932287504, 41.0543327967144],
+      zoom: 14,
       interactive: true,
     });
+    
 
     map.on("load", () => {
       const newFilteredArray = isparkLocation.filter((station) => {
@@ -28,13 +39,13 @@ const Map = () => {
           const isFiltered = contain.map((mapFilter) => {
             if (contain.length !== 0 && -98 < station.LATITUDE && 98 > station.LONGITUDE && station[mapFilter.name].toString().includes(`${mapFilter.value.toUpperCase()}`)) {
               // console.log(station[mapFilter.name].toString().includes(`${mapFilter.value.toUpperCase()}`));
-              console.log(station)
+              return station;
             }else{
               console.log("this is not match")
             }
           });
           if(isFiltered[0] !== undefined && isFiltered !== "undefined" ){
-            return isFiltered
+            return isFiltered;
           }
         }
       });
@@ -56,9 +67,9 @@ const Map = () => {
               otherMarker.getElement().classList.add("hidden");
             }
           });
-          console.log("a")
           handleMarkerHover(chooseMarker,station)
-
+          map.setCenter([station.LONGITUDE, station.LATITUDE]);
+          map.setZoom(14);
         });
 
         return marker;
@@ -66,7 +77,7 @@ const Map = () => {
     });
 
     return () => map.remove();
-  }, [contain]);
+  }, [contain,zooms]);
 
   return (
     <div ref={mapContainerRef} style={{ width: "100vw", height: "100vh" }} />

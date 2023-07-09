@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap');
+
 .sidebar{
+    font-family: 'Roboto', sans-serif;
     position: fixed;
     z-index: 999;
     height: 100%;
@@ -7,25 +10,46 @@
         height: 100%;
         background-color: #fff;
         .sidebarWrapper{
-            margin: 0px 50px 0px 10px;
+            margin: 0px 100px 0px 10px;
             padding-right: 30px;
-            padding-top: 20px;
+            padding-top: 40px;
             height: 100%;
             width: 100%;
             .sidebarHeader{
                 display: flex;
+                flex-direction: column;
                 justify-content: space-between;
-                span{
-                    #filterLabel{
-
-                    }
-                    #clearLabel{
-
+                .sidebarFirstHeader{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 20px;
+                    span{
+                        #filterLabel{
+    
+                        }
+                        #clearLabel{
+    
+                        }
                     }
                 }
+                .sidebarSecondHeader{
+                   display: flex;
+                   align-items: center;
+                   gap: 5px;
+                   margin-bottom: 20px;
+                   cursor: pointer;
+                        svg{
+                            font-size: 25px;
+                            font-weight: 600;
+                            cursor:pointer;
+                        }
+                }
+
             }
             .sidebarFilter{
                 @extend .flex-col;
+                gap: 15px;
                 .parkingNumber{
                     @extend .flex-col;
                     span{
@@ -84,7 +108,17 @@
             .sidebarSubmit{
                 @extend .flex-col;;
                 #submitButton{
-
+                    font-family: 'Roboto', sans-serif;
+                    font-weight: 600;
+                    font-size: 25px;
+                }
+            }
+            .sidebarClear{
+                @extend .sidebarSubmit;
+                #clearLabel{
+                    font-family: 'Roboto', sans-serif;
+                    font-weight: 600;
+                    font-size: 25px;
                 }
             }
         }
@@ -100,7 +134,7 @@ input{
     border: none;
     background-color: rgb(222, 222, 222);
     border-radius: 5px;
-    padding: 5px;
+    padding: 8px;
 }
 span{
     font-size: 25px;
@@ -108,7 +142,7 @@ span{
 button{
     border: none;
     border-radius: 5px;
-    padding: 5px;
+    padding: 15px;
     margin-top: 30px;
     font-size: 25px;
     cursor: pointer;
