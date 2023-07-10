@@ -1,3 +1,9 @@
-export { default as Map } from './Map';
-export { default as Sidebar } from './Sidebar';
-export { default as Buttons} from "./Buttons"
+export { default as Map } from "./Map";
+export { default as Sidebar } from "./Sidebar";
+export { default as MyTable } from "./MyTable";
+export { default as Popup } from "./Popup";
+export { default as ChevronLeftIcon } from "@mui/icons-material/ChevronLeft";
+export { default as ChevronRightIcon } from "@mui/icons-material/ChevronRight";
+export { default as KeyboardDoubleArrowLeftIcon } from "@mui/icons-material/KeyboardDoubleArrowLeft";
+export { default as KeyboardDoubleArrowRightIcon } from "@mui/icons-material/KeyboardDoubleArrowRight";
+export { default as CloseIcon } from "@mui/icons-material/Close";

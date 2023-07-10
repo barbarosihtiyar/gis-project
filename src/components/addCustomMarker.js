@@ -1,7 +1,3 @@
-import { FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
-
-//Markerlar içinde div olusturur
 export function addCustomMarker(marker) {
   const markerElement = marker.getElement();
   markerElement.classList.add("custom_marker");
@@ -12,12 +8,8 @@ export function addCustomMarker(marker) {
 }
 let stateCheckPopup = null;
 
-// Marker üzerinden çıkıldığında hover olayını başlatan fonksiyon
 export function handleMarkerHover(chooseMarker, station) {
   const infoDiv = chooseMarker.querySelector(".info");
-  console.log(chooseMarker);
-  console.log(infoDiv);
-  console.log(stateCheckPopup);
   if (stateCheckPopup == null) {
     infoDiv.style.display = "block";
 
@@ -34,13 +26,16 @@ export function handleMarkerHover(chooseMarker, station) {
   <div class="infoHoverTextIcon" id="closePopup">&times;</span>
   </div>
   `;
+    window.history.pushState(
+      {},
+      "",
+      window.location.origin + window.location.pathname
+    );
+
     const currentUrl = window.location.href;
     const newUrl = `${currentUrl}?id=${station._ID}&district=${station.COUNTY_NAME}&longitude=${station.LONGITUDE}&latitude=${station.LATITUDE}&parkingName=${station.PARK_NAME}`;
     stateCheckPopup = true;
     window.history.pushState({}, "", newUrl);
-    console.log(stateCheckPopup);
-    console.log(currentUrl);
-    console.log(newUrl);
   } else {
     const infoDiv = document.getElementById(`${station._ID}`);
     infoDiv.parentNode.style.display = "none";
@@ -57,13 +52,7 @@ export function handleMarkerHover(chooseMarker, station) {
   }
 }
 
-// Marker üzerinden çıkıldığında hover olayını sonlandıran fonksiyon
 export function handleMarkerHoverEnd(otherMarker, chooseMarker) {
   otherMarker.getElement().classList.remove("hidden");
   // const infoDiv = chooseMarker.querySelector(".info");
 }
-
-// marker.getElement().addEventListener('click', (e) => {
-//         e.preventDefault(); // Varsayılan davranışı engelle
-//         console.log("a")
-//       });

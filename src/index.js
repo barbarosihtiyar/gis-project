@@ -1,16 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { ContextProvider } from './context/context';
-import "./style/reset.css"
-import 'mapbox-gl/dist/mapbox-gl.css' 
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { ContextProvider } from "./context/context";
+import "./style/reset.css";
+import "mapbox-gl/dist/mapbox-gl.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-  <ContextProvider>
-    <App />
+    <ContextProvider>
+      <App />
     </ContextProvider>
   </React.StrictMode>
 );

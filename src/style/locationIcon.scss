@@ -1,32 +1,32 @@
-.custom_marker{
-    .info{
+.custom_marker {
+    .info {
         position: absolute;
         background-color: #fff;
         width: 250px;
         bottom: 50px;
-        left:-35px;
+        left: -35px;
         border-radius: 10px;
         z-index: 1000;
         padding: 10px;
         font-size: 13px;
-        .infoWrapper{
+        .infoWrapper {
             display: flex;
-            .infoHoverText{
+            .infoHoverText {
                 font-weight: 600;
                 font-size: 14px;
-            }   
-            .infoHoverTextIcon{
+            }
+            .infoHoverTextIcon {
                 font-size: 25px;
                 font-weight: 600;
-            }     
+            }
         }
         display: none;
     }
     .hidden {
         display: none;
-      }
+    }
 }
 
 .hidden {
     display: none;
-  }
+}

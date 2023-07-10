@@ -1,51 +1,52 @@
 import React, { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import { isparkLocation } from "../utils/constant";
-import { addCustomMarker, handleMarkerHover, handleMarkerHoverEnd } from "./addCustomMarker";
+import { addCustomMarker, handleMarkerHover } from "./addCustomMarker";
 import "../style/locationIcon.scss";
 import { useMainContext } from "../context/context";
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import Buttons from "./Buttons";
-
+import MyTable from "./MyTable";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYmFyYmFyb3NpaHRpeWFyIiwiYSI6ImNsam5mOW1ycjFiMmUzZm5vbzBxczFicTkifQ.NrxkXzSbCWv6dTxGL3vDBw";
 
- 
-
 const Map = () => {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
-  const { contain} = useMainContext();
+  const { contain } = useMainContext();
   const { zooms } = useMainContext();
-
-
+  const { setStatePopup } = useMainContext();
+  const latitudeVal = window.localStorage.getItem("latitude");
+  const longtitudeVal = window.localStorage.getItem("longitude");
   useEffect(() => {
-    const map = new mapboxgl.Map({
+    mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: [29.006932287504, 41.0543327967144],
+      center:
+        window.localStorage.getItem("newTab") == "true"
+          ? [longtitudeVal, latitudeVal]
+          : [29.006932287504, 41.0543327967144],
       zoom: 14,
       interactive: true,
     });
-    
-
-    map.on("load", () => {
+    mapRef.current.on("load", () => {
       const newFilteredArray = isparkLocation.filter((station) => {
-        if(contain.length === 0){
+        if (contain.length === 0) {
           return -98 < station.LATITUDE && 98 > station.LONGITUDE;
-        }else{
-          const isFiltered = contain.map((mapFilter) => {
-            if (contain.length !== 0 && -98 < station.LATITUDE && 98 > station.LONGITUDE && station[mapFilter.name].toString().includes(`${mapFilter.value.toUpperCase()}`)) {
-              // console.log(station[mapFilter.name].toString().includes(`${mapFilter.value.toUpperCase()}`));
-              return station;
-            }else{
-              console.log("this is not match")
-            }
+        } else {
+          const isFiltered = contain.filter((mapFilter) => {
+            return (
+              -98 < station.LATITUDE &&
+              98 > station.LONGITUDE &&
+              station[mapFilter.name]
+                .toString()
+                .includes(`${mapFilter.value.toUpperCase()}`)
+            );
           });
-          if(isFiltered[0] !== undefined && isFiltered !== "undefined" ){
-            return isFiltered;
+
+          if (isFiltered.length === contain.length) {
+            return station;
+          } else {
+            setStatePopup(true)
           }
         }
       });
@@ -54,33 +55,48 @@ const Map = () => {
         const marker = new mapboxgl.Marker()
           .setLngLat([station.LONGITUDE, station.LATITUDE])
           .setOffset([0, -25])
-          .addTo(map);
+          .addTo(mapRef.current);
 
-          addCustomMarker(marker);
-        
+        addCustomMarker(marker);
+
         marker.getElement().addEventListener("click", (e) => {
-          // Diğer markerları gizle
-          const chooseMarker = e.target.parentNode.parentNode
-          console.log(chooseMarker)
+          const chooseMarker = e.target.parentNode.parentNode;
           markers.map((otherMarker) => {
             if (otherMarker !== marker) {
               otherMarker.getElement().classList.add("hidden");
             }
           });
-          handleMarkerHover(chooseMarker,station)
-          map.setCenter([station.LONGITUDE, station.LATITUDE]);
-          map.setZoom(14);
+          handleMarkerHover(chooseMarker, station);
+          mapRef.current.setCenter([station.LONGITUDE, station.LATITUDE]);
+          mapRef.current.setZoom(14);
         });
 
         return marker;
       });
     });
 
-    return () => map.remove();
-  }, [contain,zooms]);
+    return () => mapRef.current.remove();
+  }, [contain, zooms]);
+
+  const handleCellClick = (rowData) => {
+    window.history.pushState(
+      {},
+      "",
+      `${window.location.origin}${window.location.pathname}?id=${rowData._ID}&district=${rowData.COUNTY_NAME}&longitude=${rowData.LONGITUDE}&latitude=${rowData.LATITUDE}&parkingName=${rowData.PARK_NAME}`
+    );
+
+    mapRef.current.setCenter([rowData.LONGITUDE, rowData.LATITUDE]);
+    mapRef.current.setZoom(14);
+  };
 
   return (
-    <div ref={mapContainerRef} style={{ width: "100vw", height: "100vh" }} />
+    <>
+      <div
+        ref={mapContainerRef}
+        style={{ width: "100vw", height: "100vh" }}
+      ></div>
+      <MyTable handleCellClick={handleCellClick} />
+    </>
   );
 };
 

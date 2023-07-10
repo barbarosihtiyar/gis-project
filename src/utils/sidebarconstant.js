@@ -5,7 +5,7 @@ export const sidebarConstant = [
     headerText: {
       label: "Filtreleme",
       id: "filterLabel",
-    }
+    },
   },
   {
     parkingArea: {
@@ -51,5 +51,5 @@ export const sidebarConstant = [
       label: "Temizle",
       id: "clearLabel",
     },
-  }
+  },
 ];

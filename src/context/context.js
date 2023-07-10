@@ -31,11 +31,15 @@ export const ContextProvider = ({ children }) => {
   const [contain, setContain] = useState([]);
   const [sidebarLocation, setSidebarLocation] = useState(true);
   const [zooms, setZooms] = useState(14);
+  const [statePopup, setStatePopup] = useState(false);
+
   return (
     <MainContext.Provider
       value={{
         stateSidebar,
         setStateSidebar,
+        statePopup,
+        setStatePopup,
         parkingVal,
         setParkingVal,
         districtVal,

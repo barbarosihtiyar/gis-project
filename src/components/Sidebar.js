@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useMainContext } from "../context/context";
 import { sidebarConstant } from "../utils/sidebarconstant";
 import "../style/sidebar.scss";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import CloseIcon from '@mui/icons-material/Close';
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  KeyboardDoubleArrowLeftIcon,
+  KeyboardDoubleArrowRightIcon,
+  CloseIcon,
+} from "./index";
 
 const Sidebar = () => {
   const { stateSidebar, setStateSidebar } = useMainContext();
@@ -18,6 +20,7 @@ const Sidebar = () => {
   const { capacityVal, setCapacityVal } = useMainContext();
   const { contain, setContain } = useMainContext();
   const { sidebarLocation, setSidebarLocation } = useMainContext();
+  const cacheSidebar = window.localStorage.getItem("sidebarLocation");
 
   const handleSubmit = () => {
     const stateNewFilter = [
@@ -28,11 +31,10 @@ const Sidebar = () => {
       workingHourVal,
       capacityVal,
     ];
+
     setContain(
       stateNewFilter.filter((filterParking) => filterParking.value !== "")
     );
-    console.log(stateNewFilter);
-    console.log(contain);
     sidebarHideOrShow();
   };
   const sidebarHideOrShow = () => {
@@ -45,18 +47,23 @@ const Sidebar = () => {
     setParkingDescriptionVal((prevState) => ({ ...prevState, value: "" }));
     setWorkingHourVal((prevState) => ({ ...prevState, value: "" }));
     setCapacityVal((prevState) => ({ ...prevState, value: "" }));
-    console.log(capacityVal);
   };
 
   const handleChangeSidebarLocation = () => {
     setSidebarLocation(!sidebarLocation);
+    window.localStorage.setItem("sidebarLocation", !sidebarLocation);
   };
+
 
   return stateSidebar ? (
     <div
       className={stateSidebar === true ? `sidebar show` : `sidebar hidden`}
       style={
-        sidebarLocation
+        cacheSidebar != null
+          ? cacheSidebar == "true"
+            ? { right: "0", width: "20%" }
+            : { left: "0", width: "20%" }
+          : stateSidebar
           ? { right: "0", width: "20%" }
           : { left: "0", width: "20%" }
       }
@@ -67,9 +74,8 @@ const Sidebar = () => {
             <React.Fragment key={index}>
               {content?.headerText?.id && (
                 <div className="sidebarHeader">
-                <div className="sidebarFirstHeader"
-                >
-                <span id={content?.headerText?.id}>
+                  <div className="sidebarFirstHeader">
+                    <span id={content?.headerText?.id}>
                       {content?.headerText?.label}
                     </span>
                     <div
@@ -80,13 +86,12 @@ const Sidebar = () => {
                               display: "flex",
                               alignItems: "center",
                               gap: "2px",
-                              cursor:"pointer",
+                              cursor: "pointer",
                             }
                           : { display: "none" }
                       }
                     >
-                      <CloseIcon onClick={sidebarHideOrShow}/>
-
+                      <CloseIcon onClick={sidebarHideOrShow} />
                     </div>
                     <div
                       className="rightSidebar"
@@ -97,22 +102,32 @@ const Sidebar = () => {
                               display: "flex",
                               alignItems: "center",
                               gap: "8px",
-                              cursor:"pointer"
+                              cursor: "pointer",
                             }
                       }
-                      
                     >
-                    <CloseIcon onClick={sidebarHideOrShow}/>
-                      
+                      <CloseIcon onClick={sidebarHideOrShow} />
                     </div>
-                </div>
-                  <div className="sidebarSecondHeader"
-                                        onClick={handleChangeSidebarLocation}
+                  </div>
+                  <div
+                    className="sidebarSecondHeader"
+                    onClick={handleChangeSidebarLocation}
                   >
-                  <KeyboardDoubleArrowLeftIcon style={sidebarLocation ? {display:"block"} : {display:"none"}}/>
-                  <span>Sidebar</span>
-                      <KeyboardDoubleArrowRightIcon style={sidebarLocation ? {display:"none"} : {display:"block"}}/>
-                      
+                    <KeyboardDoubleArrowLeftIcon
+                      style={
+                        sidebarLocation
+                          ? { display: "block" }
+                          : { display: "none" }
+                      }
+                    />
+                    <span>Sidebar</span>
+                    <KeyboardDoubleArrowRightIcon
+                      style={
+                        sidebarLocation
+                          ? { display: "none" }
+                          : { display: "block" }
+                      }
+                    />
                   </div>
                 </div>
               )}
@@ -131,6 +146,7 @@ const Sidebar = () => {
                             value: e.target.value,
                           })
                         }
+                        placeholder="Otopark Numarası Giriniz.."
                       />
                     )}
                   </div>
@@ -147,6 +163,7 @@ const Sidebar = () => {
                             value: e.target.value,
                           })
                         }
+                        placeholder="İlçe Adı Giriniz.."
                       />
                     )}
                   </div>
@@ -163,6 +180,7 @@ const Sidebar = () => {
                             value: e.target.value,
                           })
                         }
+                        placeholder="Konum İsmi Giriniz.."
                       />
                     )}
                   </div>
@@ -179,6 +197,7 @@ const Sidebar = () => {
                             value: e.target.value,
                           })
                         }
+                        placeholder="Otopark Açıklaması Giriniz.."
                       />
                     )}
                   </div>
@@ -195,6 +214,7 @@ const Sidebar = () => {
                             value: e.target.value,
                           })
                         }
+                        placeholder="Çalışma Saatleri Giriniz.."
                       />
                     )}
                   </div>
@@ -211,6 +231,7 @@ const Sidebar = () => {
                             value: e.target.value,
                           })
                         }
+                        placeholder="Kapasite Giriniz.."
                       />
                     )}
                   </div>
@@ -231,13 +252,13 @@ const Sidebar = () => {
               )}
               {content?.clearText?.id && (
                 <div className="sidebarClear">
-                <button
-                      id={content?.clearText?.id}
-                      onClick={clearHandle}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {content?.clearText?.label}
-                    </button>
+                  <button
+                    id={content?.clearText?.id}
+                    onClick={clearHandle}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {content?.clearText?.label}
+                  </button>
                 </div>
               )}
             </React.Fragment>
@@ -248,7 +269,11 @@ const Sidebar = () => {
   ) : (
     <div
       className="sidebar"
-      style={sidebarLocation ? { right: "0" ,width:"100px"} : { left: "0" ,width:"100px"}}
+      style={
+        sidebarLocation
+          ? { right: "0", width: "100px" }
+          : { left: "0", width: "100px" }
+      }
     >
       <div
         className="icon"
@@ -270,14 +295,26 @@ const Sidebar = () => {
               }
         }
       >
-        {sidebarLocation === true ? (
+        {cacheSidebar != null ? (
+          sidebarLocation === true ? (
+            <ChevronLeftIcon
+              style={{ fontSize: "100px" }}
+              onClick={sidebarHideOrShow}
+            />
+          ) : (
+            <ChevronRightIcon
+              style={{ fontSize: "100px" }}
+              onClick={sidebarHideOrShow}
+            />
+          )
+        ) : cacheSidebar === true ? (
           <ChevronLeftIcon
-            style={{ fontSize: "100px"}}
+            style={{ fontSize: "100px" }}
             onClick={sidebarHideOrShow}
           />
         ) : (
           <ChevronRightIcon
-            style={{ fontSize: "100px"}}
+            style={{ fontSize: "100px" }}
             onClick={sidebarHideOrShow}
           />
         )}
